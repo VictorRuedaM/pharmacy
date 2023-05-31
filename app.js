@@ -38,7 +38,7 @@ function main(){
   /**
    * Cron library that executes the function of restarting the Turn collection every day at 0 hours.
   */
-  cron.schedule('59 59 7 * * *', async () => {
+  cron.schedule('0 46 11 * * *', async () => {
     console.log(Colors.cyan('==>> Restarting Turn collection'))
     await handleRestartDBTurn()
   },
