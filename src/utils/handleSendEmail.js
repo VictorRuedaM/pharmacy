@@ -1,5 +1,7 @@
 const fetch = require("node-fetch");
+const handleLog = require('./handleLog');
 const Colors = require('@colors/colors');
+
 
 const { API_KEY_BREVO, URL_API_BREVO, EMAIL_SENDER } = process.env;
 
@@ -63,8 +65,14 @@ const handleSendEmail = (data) => {
 
     fetch(url, options)
       .then((res) => res.json())
-      .then((json) => console.log(Colors.bgMagenta.black(`==>> Email sending status: --> `), json))
-      .catch((err) => console.error(Colors.bgRed.black(` ** Error sending email: [${err}] ** `)));
+      .then((json) => {
+        console.log(Colors.bgMagenta.black(`==>> Email sending status: --> `), json)
+        handleLog({logEmail: `Send email in handleSendEmail: `, json});
+      })
+      .catch((err) => {
+        console.error(Colors.bgRed.black(` ** Error sending email: [${err}] ** `));
+        handleLog({LogError: `Error in handleSendEmail: `, json});
+      });
   });
 };
 

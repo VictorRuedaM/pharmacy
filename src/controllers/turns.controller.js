@@ -2,6 +2,7 @@ const { handleHttpError } = require("../utils/handleError");
 const { matchedData } = require("express-validator");
 const { turnModel, customerModel } = require("../models");
 const moment = require('moment');
+const handleSendEmail = require("../utils/handleSendEmail");
 
 /**
  * Get Turn by id
@@ -115,6 +116,12 @@ const createTurn = async (req, res) => {
         customerEmail: body.customerEmail,
       },
     };
+    const data = [{
+      customerEmail: body.customerEmail,
+      customerName: body.name +" "+ body.surName,
+      hour: body.timeSlot,
+      action: 'create'
+    }]
     if (!user.length && cont.length < 10) {
       await customerModel.create(newUser);
       await customerModel.updateOne(
@@ -122,6 +129,7 @@ const createTurn = async (req, res) => {
         { turnHistory: [{ registry: moment().format('MMMM Do YYYY, h:mm:ss a'), timeSlot:moment(body.timeSlot, "h:mm").format("HH:mm")}] }
       );
       await turnModel.create(newTurn);
+      handleSendEmail(data);
       res.status(201).json({msg:"User and Turn created", status:true});
     } else if (cont.length < 10) {
       await turnModel.create(newTurn);
@@ -133,6 +141,7 @@ const createTurn = async (req, res) => {
           },
         }
       );
+      handleSendEmail(data);
       res.status(201).json({msg:"Turn created", status:true});
     } else {
       res.status(404).json({msg:"Turns not available for this time ", status:false});

@@ -123,7 +123,7 @@ const deleteCustomer = async (req, res) => {
   try {
     req = matchedData(req);
     const data = await customerModel.findOneAndDelete({
-      _id: req.id
+      identificationNumber: req.in
     });
     if (!data){
       handleHttpError(res, "Customer Not Found", 404, "getCustomer");

@@ -27,7 +27,7 @@ router.post('/',validatorCreateCustomer, createCustomer);
 /**
  * Delete customer
  */
-router.delete('/:id',validatorMongoId, deleteCustomer);
+router.delete('/in/:in',validatorIdentification, deleteCustomer);
 
 
 
