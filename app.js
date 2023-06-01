@@ -8,7 +8,7 @@ const cron = require('node-cron');
 const routes = require('./src/routes');
 const { handleTurns } = require('./src/utils/handleTurns');
 const handleRestartDBTurn = require('./src/utils/handleRestartDBTurn');
-const moment = require('moment');
+const moment = require('moment')
 
 
 
