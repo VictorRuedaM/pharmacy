@@ -8,6 +8,7 @@ const cron = require('node-cron');
 const routes = require('./src/routes');
 const { handleTurns } = require('./src/utils/handleTurns');
 const handleRestartDBTurn = require('./src/utils/handleRestartDBTurn');
+const moment = require('moment')
 
 
 
@@ -22,6 +23,8 @@ routes(app);
 
 function main(){
 
+  console.log('hora actual--', Date())
+  console.log('hora moment--', moment().format('MMMM Do YYYY, h:mm:ss a'))
   app.listen(PORT, () => {
     console.log(Colors.bgGreen.black(`==>> Server is running on ${URL}:${PORT} `));
   })

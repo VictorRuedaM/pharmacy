@@ -1,6 +1,9 @@
 const Colors = require('@colors/colors');
 const {turnModel} = require("../models");
 const handleSendEmail = require('./handleSendEmail');
+const moment = require('moment');
+require('moment-timezone');
+moment.tz.setDefault('America/Bogota');
 
 const handleTurns = async () => {
     const turns = await turnModel.find({});
@@ -30,7 +33,7 @@ const handleTurns = async () => {
         });
 
         const filterTurn = turnSort.filter(t => {
-            const hourSistem = new Date().getHours();
+            const hourSistem = parseInt(moment().format('HH'));
             const [hourA] = t.hour?.split(":").map(Number);
             return hourA === (hourSistem + 1);
         });

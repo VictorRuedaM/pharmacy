@@ -31,11 +31,6 @@ const validatorCreatePharmacy = [
   .exists()
   .notEmpty()
   .isString(),
-  check("phone")
-  .exists()
-  .notEmpty()
-  .isNumeric()
-  .isLength({min: 10, max: 10}),
   check("email")
   .exists()
   .notEmpty()
