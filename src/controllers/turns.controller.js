@@ -1,10 +1,11 @@
 const { handleHttpError } = require("../utils/handleError");
 const { matchedData } = require("express-validator");
 const { turnModel, customerModel } = require("../models");
-const moment = require('moment');
 const handleSendEmail = require("../utils/handleSendEmail");
-require('moment-timezone');
-moment.tz.setDefault('America/Bogota');
+const { dateFormat , hourFormat } = require("../utils/handleDate");
+
+const dateSis = dateFormat();
+const hourSis = hourFormat();
 
 /**
  * Get Turn by id
@@ -128,7 +129,7 @@ const createTurn = async (req, res) => {
       await customerModel.create(newUser);
       await customerModel.updateOne(
         { identificationNumber: body.identificationNumber },
-        { turnHistory: [{ registry: moment().format('MMMM Do YYYY, h:mm:ss a'), timeSlot:moment(body.timeSlot, "h:mm").format("HH:mm")}] }
+        { turnHistory: [{ registry: dateSis, timeSlot: hourSis}] }
       );
       await turnModel.create(newTurn);
       handleSendEmail(data);
@@ -139,7 +140,7 @@ const createTurn = async (req, res) => {
         { identificationNumber: body.identificationNumber },
         {
           $push: {
-            turnHistory: [{ registry: moment().format('MMMM Do YYYY, h:mm:ss a'), timeSlot:moment(body.timeSlot, "h:mm").format("HH:mm")}],
+            turnHistory: [{ registry: dateSis, timeSlot: hourSis}],
           },
         }
       );
