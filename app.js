@@ -17,9 +17,15 @@ const PORT = process.env.PORT || 3003;
 const URL = process.env.URL_SERVER || 'http://localhost';
 
 
-const whiteList = ['http://localhost:3000'];
+const whiteList = process.env.WHILE_LIST;
 console.log(whiteList)
 app.use(cors({origin: whiteList}));
+
+// app.use((req, res, next) => {
+//   res.append('Access-Control-Allow-Origin', ['https://pharmacy-y33y.onrender.com']);
+//   res.append('Access-Control-Allow-Origin', 'GET, POST, PUT, DELETE');
+//   next();
+// })
 // app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
