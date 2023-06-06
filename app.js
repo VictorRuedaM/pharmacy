@@ -17,11 +17,9 @@ const PORT = process.env.PORT || 3003;
 const URL = process.env.URL_SERVER || 'http://localhost';
 
 
-const whiteList = ['https://pharmacy-client.onrender.com'];
+const whiteList = ['http://localhost:3000'];
 console.log(whiteList)
-app.use(cors({
-  origin: whiteList
-}));
+app.use(cors({origin: whiteList}));
 // app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
