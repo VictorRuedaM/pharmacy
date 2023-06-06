@@ -16,7 +16,12 @@ const app = express();
 const PORT = process.env.PORT || 3003;
 const URL = process.env.URL_SERVER || 'http://localhost';
 
-app.use(cors());
+
+const whiteList = process.env.WHILE_LIST;
+app.use(cors({
+  origin: whiteList
+}));
+// app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 routes(app);
